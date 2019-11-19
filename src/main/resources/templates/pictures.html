@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>White Collar Shops</title>
+    <!-- Adding Bootstrap files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<header th:insert="~{header :: headerTemplate}"></header>
+<section id="display-messages" th:if="${message} != ''"  th:insert="~{errors :: errorDisplay}"></section>
+<section id="showCurrentPictures" >
+    <!-- Show Current pictures-->
+    <div class="container w-50">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="4">
+                    <p  th:text="${shopName}" class="text-center text-secondary">ShopName</p>
+                    <p class="text-center text-secondary">Picture List</p>
+                </th>
+            </tr>
+            </thead>
+            <tr>
+                <td>Name</td>
+                <td>Author</td>
+                <td>Price</td>
+                <td>Arrival Date</td>
+
+            </tr>
+            <tr th:each="picture : ${PicturesList}">
+                <td th:text="${picture.name}">PictureData</td>
+                <td th:text="${picture.author}">PictureData</td>
+                <td th:text="${picture.price}">PictureData</td>
+                <td th:text="${picture.arrival_date}">PictureData</td>
+            </tr>
+
+        </table>
+    </div>
+
+
+</section>
+<section id="addPictures" th:if="${EnableForm}">
+    <!-- Add new pictrues -->
+    <div class="container w-50">
+        <form method="post">
+            <input type="hidden" name="_method" value="post"/>
+            <table class="table ">
+                <thead>
+                <tr>
+                    <th colspan="2">
+                        Do you want to add a new picture to this shop?
+                    </th>
+                </tr>
+                </thead>
+                <tr>
+                    <td><label for="name">Picture Name:</label></td>
+                    <td><input type="text" id="name" name="name" th:value="${FormName}" required></td>
+                </tr>
+                <tr>
+                    <td><label for="author">Author:</label></td>
+                    <td><input type="text" id="author" name="author" th:value="${FormAuthor}" required> </td>
+                </tr>
+                <tr>
+                    <td><label for="price">Price:</label></td>
+                    <td><input type="text" id="price" name="price" th:value="${FormPrice}" required> </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <input type="submit" value="Submit">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</section>
+<section id="burnDown">
+    <div class="container">
+        <div class="row">
+            <div class="offset-3 col-3 text-center">
+                <a  class="btn btn-link" th:href="@{/shops}">Go back to shops</a>
+            </div>
+            <div class="col-3 text-center">
+                <form method="post">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <input type="hidden" name="name" value=""/>
+                    <input type="hidden" name="author" value=""/>
+                    <input type="hidden" name="price" value="DELETE"/>
+
+                    <input class="btn btn-link" type="submit" value="BurnDown">
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:insert="~{footer :: footerTemplate}"></footer>
+
+</body>
